@@ -282,9 +282,7 @@ fi
 else
 
 
-
-
-#if output.log do not contains any 'Total-Uninstall' filenames wich ends with exe 
+#if output.log do not contains any 'Dropbox' filenames wich ends with exe 
 #lets send emails to all people in "maintenance" file
 emails=$(cat ../maintenance | sed '$aend of file')
 printf %s "$emails" | while IFS= read -r onemail
