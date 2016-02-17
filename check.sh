@@ -243,8 +243,7 @@ filename=$(echo $url | sed "s/^.*\///g")
 
 #check if this filename is in database
 grep "$filename" $db > /dev/null
-if [ $? -ne 0 ]
-then
+if [ $? -ne 0 ]; then
 echo new version detected!
 
 echo Downloading $filename
@@ -259,14 +258,17 @@ echo creating md5 checksum of file..
 md5=$(md5sum $tmp/$filename | sed "s/\s.*//g")
 echo
 
+
 #detect exact verison of Dropbox
-version=$(pestr $tmp/$filename | grep -m1 -A1 "ProductVersion" | grep -v "ProductVersion")
-echo $version
+version=$(echo "$filename" "s/%20/\n/g" | grep "^[0-9]\+[\., ]\+[0-9]\+[\., ]\+[0-9]\+")
+echo $version | grep "^[0-9]\+[\., ]\+[0-9]\+[\., ]\+[0-9]\+"
+if [ $? -eq 0 ]; then
 echo
 
 echo "$filename">> $db
 echo "$md5">> $db
 echo "$sha1">> $db
+echo >> $db
 
 #lets send emails to all people in "posting" file
 emails=$(cat ../posting | sed '$aend of file')
@@ -277,11 +279,24 @@ $md5
 $sha1"
 } done
 echo
+
+else
+#version pattern do not work
+else version pattern do not work
+emails=$(cat ../maintenance | sed '$aend of file')
+printf %s "$emails" | while IFS= read -r onemail
+do {
+python ../send-email.py "$onemail" "To Do List" "version pattern do not work: 
+$link"
+} done
 fi
 
 else
+#file already in database
+echo file already in database
+fi
 
-
+else
 #if output.log do not contains any 'Dropbox' filenames wich ends with exe 
 #lets send emails to all people in "maintenance" file
 emails=$(cat ../maintenance | sed '$aend of file')
