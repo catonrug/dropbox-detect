@@ -219,7 +219,8 @@ if [ ! -f "/home/pi/client_secrets.json" ]
 		fi
 fi
 
-
+#set name
+name=$(echo "Dropbox")
 
 #this link redirects to the latest version
 link=$(echo "https://www.dropbox.com/download?full=1&amp;plat=win")
@@ -266,6 +267,7 @@ if [ $? -eq 0 ]; then
 echo
 
 echo "$filename">> $db
+echo "$version">> $db
 echo "$md5">> $db
 echo "$sha1">> $db
 echo >> $db
@@ -274,7 +276,7 @@ echo >> $db
 emails=$(cat ../posting | sed '$aend of file')
 printf %s "$emails" | while IFS= read -r onemail
 do {
-python ../send-email.py "$onemail" "Dropbox $version" "$url 
+python ../send-email.py "$onemail" "$name $version" "$url 
 $md5
 $sha1"
 } done
