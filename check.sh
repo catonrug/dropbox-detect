@@ -284,7 +284,7 @@ echo
 
 else
 #version pattern do not work
-else version pattern do not work
+echo version pattern do not work
 emails=$(cat ../maintenance | sed '$aend of file')
 printf %s "$emails" | while IFS= read -r onemail
 do {
