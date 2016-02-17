@@ -261,7 +261,7 @@ echo
 
 
 #detect exact verison of Dropbox
-version=$(echo "$filename" "s/%20/\n/g" | grep "^[0-9]\+[\., ]\+[0-9]\+[\., ]\+[0-9]\+")
+version=$(echo "$filename" | sed "s/%20/\n/g" | grep "^[0-9]\+[\., ]\+[0-9]\+[\., ]\+[0-9]\+")
 echo $version | grep "^[0-9]\+[\., ]\+[0-9]\+[\., ]\+[0-9]\+"
 if [ $? -eq 0 ]; then
 echo
